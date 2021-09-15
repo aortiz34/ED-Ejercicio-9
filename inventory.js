@@ -1,16 +1,16 @@
-import Product from "./product.js";
 export default class Inventory {
     constructor() {
         this._inventory = [];
     }
 
     searchProduct(code){
-        this._inventory.forEach( p => {
-            if (code == p.getCode()) {
-                return p;
+        for (let i = 0; i < this._inventory.length; i++) {
+            if (code == this._inventory[i].getCode()) {
+                return this._inventory[i];
             }
-        });
-        return false;
+            
+        }
+        return null;
     }
 
     addProduct(product){
@@ -18,7 +18,8 @@ export default class Inventory {
             return false;
         }else{
             this._inventory.push(product);
-            return true;
+            console.log(this._inventory);
+            return product;
         }
     }
 
