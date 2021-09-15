@@ -41,3 +41,17 @@ btnSearch.addEventListener("click", () => {
     }
 });
 
+const btnList = document.querySelector("#btnList");
+btnList.addEventListener("click", () => {
+    div.innerHTML += inventory.listProducts();
+});
+
+const bntListInv = document.querySelector("#btnListInv");
+bntListInv.addEventListener("click", () => {
+    div.innerHTML += inventory.listProductsInv();
+});
+
+const btnDelete = document.querySelector("#btnDelete");
+btnDelete.addEventListener("click", () => {
+    
+});
