@@ -41,7 +41,7 @@ export default class Inventory {
         let div =document.querySelector("#detail");
         let pos = document.getElementById("numberPosition");
         if(pos.value){
-            if (pos.value <= this._inventory.length + 1) {
+            if (pos.value <= this._inventory.length + 1 && this._inventory.length < 20) {
                 this._inventory.push(product);
                 for (let i = this._inventory.length - 1; i >= pos.value; i--) {
                     let aux  = this._inventory[i];
@@ -64,6 +64,7 @@ export default class Inventory {
     }
 
     listProducts(){
+        let div =document.querySelector("#detail");
         let list = "";
         for (let i = 0; i < this._inventory.length; i++) {
             let product = this._inventory[i];
@@ -71,10 +72,12 @@ export default class Inventory {
             ${i+1}-${product.getName()} ${product.getCode()}
             </div>`;
         }
+        div.innerHTML = list;
         return list;
     }
 
     listProductsInv(){
+        let div =document.querySelector("#detail");
         let list = "";
         let j = 1;
         for (let i = this._inventory.length - 1; i >= 0;j++, i--) {
@@ -83,15 +86,17 @@ export default class Inventory {
             ${j}-${product.getName()} ${product.getCode()}
             </div>`;
         }
+        div.innerHTML = list;
         return list;
     }
 
-    deleteProduct(code){
+    deleteProduct(){
+        let code = document.getElementById("numberCode");
         let div =document.querySelector("#detail");
-        let product = this._inventory[this._findProduct(code)];
-        console.log(this._findProduct(code));
-        if (this._findProduct(code) || this._findProduct(code) === 0) {
-            for (let i = this._findProduct(code); i < this._inventory.length - 1; i++) {
+        let product = this._inventory[this._findProduct(code.value)];
+        console.log(this._findProduct(code.value));
+        if (this._findProduct(code.value) || this._findProduct(code.value) === 0) {
+            for (let i = this._findProduct(code.value); i < this._inventory.length - 1; i++) {
                 let aux = this._inventory[i];
                 this._inventory[i] = this._inventory[i + 1];
                 this._inventory[i + 1] = aux;
@@ -100,11 +105,12 @@ export default class Inventory {
             div.innerHTML = `<div>
             El producto ${product.getName()} a sido eliminado
             </div>`;
-            return this._inventory[this.searchProduct(code)];
+            return this._inventory[this.searchProduct(code.value)];
         }else{
             div.innerHTML = `<div>
             El producto no existe
             </div>`;
+            code.value = "";
             return null;
         }
     }

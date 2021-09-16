@@ -40,11 +40,11 @@ class App{
    }
 
    _list= () =>{
-    this._div.innerHTML = this._inventory.listProducts();
+    this._inventory.listProducts();
    }
 
    _listInv= () =>{
-    this._div.innerHTML = this._inventory.listProductsInv();
+    this._inventory.listProductsInv();
    }
 
    _insert= () => {
@@ -53,9 +53,7 @@ class App{
    }
 
    _delete= () => {
-    let code = document.getElementById("numberCode");
-    this._inventory.deleteProduct(code.value);
-    code.value = "";
+    this._inventory.deleteProduct();
    }
 }
 
