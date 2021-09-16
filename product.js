@@ -53,6 +53,10 @@ export default class Product {
             inpCost.value="";
             return new Product(name,code,quantity,cost);
         }
+        let div = document.querySelector("#detail");
+        div.innerHTML = `<div>
+        El producto no se agregó
+        </div>`;
         return false; 
     }
 }

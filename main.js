@@ -21,32 +21,17 @@ class App{
 
    _addProduct= () =>{
     let product= Product.readForm();
-    if(!product){
-        this._div.innerHTML += `<div>
-        El producto ${product.getName()} no se agregó
-        </div>`;
-        return;
-    }
-    let added=this._inventory.addProduct(product);
-    if(!added){
-        this._div.innerHTML += `<div>
-        El producto ${product.getName()} no se agregó
-        </div>`;
-        return;
-    }
-    this._div.innerHTML += `<div>
-    El producto ${product.getName()} a sido agregado
-    </div>`;
+    this._inventory.addProduct(product);
    }
 
    _searchProduct= () =>{
     let code = document.getElementById("numberCode");
     if (this._inventory.searchProduct(code.value)) {
-        this._div.innerHTML += this._inventory[this._inventory.searchProduct(code.value)].getInfo();
+        this._div.innerHTML = this._inventory.searchProduct(code.value).getInfo();
         code.value = "";
         return;
     }else {
-        this._div.innerHTML += `<div>
+        this._div.innerHTML = `<div>
         No se encontró el producto.
         </div>`;
         code.value = "";
@@ -55,11 +40,11 @@ class App{
    }
 
    _list= () =>{
-    this._div.innerHTML += this._inventory.listProducts();
+    this._div.innerHTML = this._inventory.listProducts();
    }
 
    _listInv= () =>{
-    this._div.innerHTML += this._inventory.listProductsInv();
+    this._div.innerHTML = this._inventory.listProductsInv();
    }
 
    _insert= () => {
