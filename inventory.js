@@ -18,8 +18,26 @@ export default class Inventory {
             return false;
         }else{
             this._inventory.push(product);
-            console.log(this._inventory);
             return product;
+        }
+    }
+
+    insertProduct(product){
+        let pos = document.getElementById("numberPosition");
+        if(pos.value){
+            if (pos.value <= this._inventory.length + 1) {
+                this._inventory.push(product);
+                for (let i = this._inventory.length - 1; i >= pos.value; i--) {
+                    let aux  = this._inventory[i];
+                    this._inventory[i] = this._inventory[i - 1];
+                    this._inventory[i - 1] = aux;
+                }
+                pos.value = ""; 
+                return product;
+            }else{
+                pos.value = "";
+                return false;
+            }
         }
     }
 
@@ -55,3 +73,4 @@ export default class Inventory {
         }
     }
 }
+

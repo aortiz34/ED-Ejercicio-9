@@ -1,57 +1,69 @@
 import Product from "./product.js";
 import Inventory from "./inventory.js";
 
-let inventory= new Inventory();
-let div = document.querySelector("#detail");
+class App{
+    constructor(){
+        this._inventory= new Inventory();
+        this._div = document.querySelector("#detail");
+        let btnAdd=document.querySelector("#btnAdd");
+        btnAdd.addEventListener("click",this._addProduct);
+        let btnSearch = document.querySelector("#btnSearch");
+        btnSearch.addEventListener("click",this._searchProduct);
+        let btnList=document.querySelector("#btnList");
+        btnList.addEventListener("click",this._list);
+        let btnListInv=document.querySelector("#btnListInv");
+        btnListInv.addEventListener("click",this._listInv);
+        let btnInsert=document.querySelector("#btnInsert");
+        btnInsert.addEventListener("click",this._insert);
+   }
 
-const btnAdd = document.querySelector("#btnAdd");
-btnAdd.addEventListener("click", () => {
+   _addProduct= () =>{
     let product= Product.readForm();
     if(!product){
-        div.innerHTML += `<div>
+        this._div.innerHTML += `<div>
         El producto ${product.getName()} no se agregó
         </div>`;
         return;
     }
-    let added=inventory.addProduct(product);
+    let added=this._inventory.addProduct(product);
     if(!added){
-        div.innerHTML += `<div>
+        this._div.innerHTML += `<div>
         El producto ${product.getName()} no se agregó
         </div>`;
         return;
     }
-    div.innerHTML += `<div>
+    this._div.innerHTML += `<div>
     El producto ${product.getName()} a sido agregado
     </div>`;
-});
+   }
 
-const btnSearch = document.querySelector("#btnSearch");
-btnSearch.addEventListener("click", () => {
+   _searchProduct= () =>{
     let code = document.getElementById("numberCode");
-    if (inventory.searchProduct(code.value)) {
-        div.innerHTML += inventory.searchProduct(code.value).getInfo();
+    if (this._inventory.searchProduct(code.value)) {
+        this._div.innerHTML += this._inventory.searchProduct(code.value).getInfo();
         code.value = "";
         return;
     }else {
-        div.innerHTML += `<div>
+        this._div.innerHTML += `<div>
         No se encontró el producto.
         </div>`;
         code.value = "";
         return;
     }
-});
+   }
 
-const btnList = document.querySelector("#btnList");
-btnList.addEventListener("click", () => {
-    div.innerHTML += inventory.listProducts();
-});
+   _list= () =>{
+    this._div.innerHTML += this._inventory.listProducts();
+   }
 
-const bntListInv = document.querySelector("#btnListInv");
-bntListInv.addEventListener("click", () => {
-    div.innerHTML += inventory.listProductsInv();
-});
+   _listInv= () =>{
+    this._div.innerHTML += this._inventory.listProductsInv();
+   }
 
-const btnDelete = document.querySelector("#btnDelete");
-btnDelete.addEventListener("click", () => {
-    
-});
+   _insert= () => {
+    let product= Product.readForm();
+    this._inventory.insertProduct(product);
+   }
+}
+
+new App();
