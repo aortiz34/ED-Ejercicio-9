@@ -15,6 +15,8 @@ class App{
         btnListInv.addEventListener("click",this._listInv);
         let btnInsert=document.querySelector("#btnInsert");
         btnInsert.addEventListener("click",this._insert);
+        let btnDelete=document.querySelector("#btnDelete");
+        btnDelete.addEventListener("click",this._delete);
    }
 
    _addProduct= () =>{
@@ -40,7 +42,7 @@ class App{
    _searchProduct= () =>{
     let code = document.getElementById("numberCode");
     if (this._inventory.searchProduct(code.value)) {
-        this._div.innerHTML += this._inventory.searchProduct(code.value).getInfo();
+        this._div.innerHTML += this._inventory[this._inventory.searchProduct(code.value)].getInfo();
         code.value = "";
         return;
     }else {
@@ -63,6 +65,12 @@ class App{
    _insert= () => {
     let product= Product.readForm();
     this._inventory.insertProduct(product);
+   }
+
+   _delete= () => {
+    let code = document.getElementById("numberCode");
+    this._inventory.deleteProduct(code.value);
+    code.value = "";
    }
 }
 

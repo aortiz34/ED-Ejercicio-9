@@ -6,9 +6,8 @@ export default class Inventory {
     searchProduct(code){
         for (let i = 0; i < this._inventory.length; i++) {
             if (code == this._inventory[i].getCode()) {
-                return this._inventory[i];
+                return i;
             }
-            
         }
         return null;
     }
@@ -64,12 +63,17 @@ export default class Inventory {
         return list;
     }
 
-    deleteProduct(product){
-        if (this.searchProduct(product.getCode())) {
-
-            return this._inventory.pop();
+    deleteProduct(code){
+        if (this.searchProduct(code) || this.searchProduct(code) == 0) {
+            for (let i = this.searchProduct(code); i < this._inventory.length - 1; i++) {
+                let aux = this._inventory[i];
+                this._inventory[i] = this._inventory[i + 1];
+                this._inventory[i + 1] = aux;
+            }
+            this._inventory.pop();
+            return this._inventory[this.searchProduct(code)];
         }else{
-            return false;
+            return null;
         }
     }
 }
