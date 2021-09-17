@@ -37,32 +37,6 @@ export default class Inventory {
         }
     }
 
-    insertProduct(product){
-        let div =document.querySelector("#detail");
-        let pos = document.getElementById("numberPosition");
-        if(pos.value){
-            if (pos.value <= this._inventory.length + 1 && this._inventory.length < 20) {
-                this._inventory.push(product);
-                for (let i = this._inventory.length - 1; i >= pos.value; i--) {
-                    let aux  = this._inventory[i];
-                    this._inventory[i] = this._inventory[i - 1];
-                    this._inventory[i - 1] = aux;
-                }
-                div.innerHTML = `<div>
-                El producto ${product.getName()} a sido agregado
-                </div>`;
-                pos.value = ""; 
-                return product;
-            }else{
-                div.innerHTML = `<div>
-                El producto ${product.getName()} no se agregó
-                </div>`;
-                pos.value = "";
-                return false;
-            }
-        }
-    }
-
     listProducts(){
         let div =document.querySelector("#detail");
         let list = "";

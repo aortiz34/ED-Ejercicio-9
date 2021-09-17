@@ -13,8 +13,6 @@ class App{
         btnList.addEventListener("click",this._list);
         let btnListInv=document.querySelector("#btnListInv");
         btnListInv.addEventListener("click",this._listInv);
-        let btnInsert=document.querySelector("#btnInsert");
-        btnInsert.addEventListener("click",this._insert);
         let btnDelete=document.querySelector("#btnDelete");
         btnDelete.addEventListener("click",this._delete);
    }
@@ -45,11 +43,6 @@ class App{
 
    _listInv= () =>{
     this._inventory.listProductsInv();
-   }
-
-   _insert= () => {
-    let product= Product.readForm();
-    this._inventory.insertProduct(product);
    }
 
    _delete= () => {
