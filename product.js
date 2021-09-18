@@ -32,7 +32,7 @@ export default class Product {
         Código: ${this._code}<br>
         Cantidad: ${this._quantity}<br>
         Costo: ${this._cost}<br>
-        valor de mercancia: ${this._getCommodityCost()}<br>
+        valor de mercancia: ${this._getCommodityCost()}$<br>
         </div>`;
     }
 
