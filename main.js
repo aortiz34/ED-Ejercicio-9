@@ -18,8 +18,23 @@ class App{
    }
 
    _addProduct= () =>{
-    let product= Product.readForm();
-    this._inventory.addProduct(product);
+       let product = null;
+        let name = document.getElementById('textName').value;
+        let code = document.getElementById('numberCode').value;
+        let quantity = document.getElementById('numberQuantity').value;
+        let cost = document.getElementById('numberCost').value;
+
+        if(code&&name&&quantity&&cost){
+            document.getElementById('textName').value = "";
+            document.getElementById('numberCode').value = "";
+            document.getElementById('numberQuantity').value = "";
+            document.getElementById('numberCost').value = "";
+            product = new Product(name,code,quantity,cost);
+            this._div.innerHTML = this._inventory.addProduct(product);
+        }else{
+            this._div.innerHTML = `El producto no se agregó`;
+            return;
+        }
    }
 
    _searchProduct= () =>{
@@ -29,24 +44,33 @@ class App{
         code.value = "";
         return;
     }else {
-        this._div.innerHTML = `<div>
-        No se encontró el producto.
-        </div>`;
+        this._div.innerHTML = `No se encontró el producto.`;
         code.value = "";
         return;
     }
    }
 
    _list= () =>{
-    this._inventory.listProducts();
+    this._div.innerHTML = this._inventory.listProducts();
+    return;
    }
 
    _listInv= () =>{
-    this._inventory.listProductsInv();
+    this._div.innerHTML = this._inventory.listProductsInv();
+    return;
    }
 
    _delete= () => {
-    this._inventory.deleteProduct();
+       let code = document.getElementById("numberCode");
+       if (this._inventory.deleteProduct(code)) {
+           this._div.innerHTML = `Se eliminó el producto.`;
+           code.value = "";
+           return;
+       }else{
+        this._div.innerHTML = `No se encontró el producto.`;
+        code.value = "";
+        return;
+       }
    }
 }
 
