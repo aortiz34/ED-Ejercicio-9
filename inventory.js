@@ -11,6 +11,7 @@ export default class Inventory {
                 return null;
             }
         }
+        return null;
     }
 
     _findProduct(code){
@@ -21,9 +22,12 @@ export default class Inventory {
                 return i;
             }
         }
+        return -1;
     }
 
     addProduct(product){
+        console.log(this.searchProduct(product.getCode()));
+        console.log(this._findProduct(product.getCode()));
         if (this._inventory.length < 20 && this.searchProduct(product.getCode()) == null) {
             this._inventory.push(product);
             for (let i = this._inventory.length - 1; i > this._findProduct(product.getCode()); i--) {
