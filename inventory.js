@@ -42,26 +42,37 @@ export default class Inventory {
     }
 
     listProducts(){
-        let list = "";
-        for (let i = 0; i < this._inventory.length; i++) {
-            let product = this._inventory[i];
-            list += `<div>
-            ${i+1}-${product.getName()} ${product.getCode()}
-            </div>`;
+        let txt = "";
+        if (this._inicio===null){
+            return "Esta vacio";
+        }else {
+            return this._addToList(this._inicio);
         }
-        return list;
+    }
+
+    _addToList(aux){
+        if (aux.getNext() == null) {
+            return aux.getInfoList();
+        }else{
+            return aux.getInfoList() + this._addToList(aux.getNext());
+        }
     }
 
     listProductsInv(){
-        let list = "";
-        let j = 1;
-        for (let i = this._inventory.length - 1; i >= 0;j++, i--) {
-            let product = this._inventory[i];
-            list += `<div>
-            ${j}-${product.getName()} ${product.getCode()}
-            </div>`;
+        let txt = "";
+        if (this._inicio===null){
+            return "Esta vacio";
+        }else {
+            return this._addToListInv(this._inicio);
         }
-        return list;
+    }
+
+    _addToListInv(aux){
+        if (aux.getNext() == null) {
+            return aux.getInfoList();
+        }else{
+            return this._addToListInv(aux.getNext()) + aux.getInfoList();
+        }
     }
 
     deleteProduct(code){

@@ -4,6 +4,24 @@ export default class Product {
         this._code = Number(code);
         this._quantity = quantity;
         this._cost = cost;
+        this._next = null;
+        this._previous = null;
+    }
+
+    getNext(){
+        return this._next;
+    }
+
+    setNext(product){
+        this._next = product;
+    }
+
+    getPrevious(){
+        return this._previous;
+    }
+
+    setPrevious(product){
+        this._previous = product;
     }
 
     getName(){
@@ -34,5 +52,11 @@ export default class Product {
         Costo: ${this._cost}<br>
         valor de mercancia: ${this._getCommodityCost()}$<br>
         </div>`;
+    }
+
+    getInfoList(){
+        return `<div>
+        ${this._name}--${this._code}<br>
+        ${this._cost}$`;
     }
 }
