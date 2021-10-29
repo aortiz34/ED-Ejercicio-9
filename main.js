@@ -61,16 +61,18 @@ class App{
    }
 
    _delete= () => {
-       let code = document.getElementById("numberCode");
-       if (this._inventory.deleteProduct(code)) {
-           this._div.innerHTML = `Se eliminó el producto.`;
-           code.value = "";
-           return;
-       }else{
-        this._div.innerHTML = `No se encontró el producto.`;
+    let code = document.getElementById("numberCode");
+    let elim = this._inventory.deleteProduct(code.value);
+    if (elim) {
+        this._div.innerHTML = `Se eliminó el producto. </n>
+        ${elim.getInfo()}`;
         code.value = "";
         return;
-       }
+    }else{
+     this._div.innerHTML = `No se encontró el producto.`;
+     code.value = "";
+     return;
+    }
    }
 }
 

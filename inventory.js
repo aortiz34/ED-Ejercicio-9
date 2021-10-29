@@ -1,44 +1,60 @@
 export default class Inventory {
     constructor() {
-        this._inventory = [];
+        this._inicio = null;
     }
 
     searchProduct(code){
-        for (let i = 0; i < this._inventory.length; i++) {
-            if (code == this._inventory[i].getCode()) {
-                return this._inventory[i];
-            }else if (code < this._inventory[i].getCode()) {
+        let aux = this._inicio;
+        while (aux != null) {
+            if (code == aux.getCode()) {
+                return aux;
+            }else if (code < aux.getCode()) {
                 return null;
+            }else {
+                aux = aux.getNext();
             }
         }
         return null;
     }
 
-    _findProduct(code){
-        for (let i = 0; i < this._inventory.length; i++) {
-            if (code == this._inventory[i].getCode()) {
-                return i;
-            }else if (code < this._inventory[i].getCode()) {
-                return i;
+    findPosition(code){
+        let aux = this._inicio;
+        while (aux != null) {
+            if (code < aux.getCode()) {
+                return aux;
+            }else if(aux.getNext() != null){
+                aux = aux.getNext();
+            }else{
+                return aux;
             }
         }
-        return -1;
     }
 
     addProduct(product){
-        console.log(this.searchProduct(product.getCode()));
-        console.log(this._findProduct(product.getCode()));
-        if (this._inventory.length < 20 && this.searchProduct(product.getCode()) == null) {
-            this._inventory.push(product);
-            for (let i = this._inventory.length - 1; i > this._findProduct(product.getCode()); i--) {
-                let aux  = this._inventory[i];
-                this._inventory[i] = this._inventory[i - 1];
-                this._inventory[i - 1] = aux;
+        if (this._inicio == null){
+            this._inicio = product;
+            return `${this._inicio.getInfo()}`;
+        }else if(this.searchProduct(product.getCode()) == null){
+            if (product.getCode() < this._inicio.getCode()){
+                product.setNext(this._inicio);
+                this._inicio.setPrevious(product);
+                this._inicio = product;
+                return `${product.getInfo()}`;
+            }else if(this.findPosition(product.getCode()).getCode() < product.getCode()){
+                product.setPrevious(this.findPosition(product.getCode()));
+                this.findPosition(product.getCode()).setNext(product);
+                return `${product.getInfo()}`;
+            }else{
+                product.setNext(this.findPosition(product.getCode()));
+                product.setPrevious(this.findPosition(product.getCode()).getPrevious());
+                this.findPosition(product.getCode()).setPrevious(product);
+                product.getPrevious().setNext(product);
+                return `${product.getInfo()}`;
             }
-            return `${product.getInfo()}`;
         }else{
-            return `El producto ${product.getName()} no se agregó`;
+            return `No se pudo agregar`;
         }
+        
     }
 
     listProducts(){
@@ -76,15 +92,39 @@ export default class Inventory {
     }
 
     deleteProduct(code){
-        let product = this._inventory[this._findProduct(code.value)];
-        if (this.searchProduct(code.value) || this._findProduct(code.value) === 0) {
-            for (let i = this._findProduct(code.value); i < this._inventory.length - 1; i++) {
-                this._inventory[i] = this._inventory[i + 1];
-            }
-            this._inventory.pop();
-            return product;
-        }else{
+        if (this._inicio == null) {
             return null;
+        }else{
+            let elim = null;
+            if (code == this._inicio.getCode()){
+                if (this._inicio.getNext() != null){
+                elim = this._inicio;
+                this._inicio = this._inicio.getNext();
+                this._inicio.setPrevious(null);
+                elim.setNext(null);
+                elim.setPrevious(null);
+                return elim;
+                }else{
+                elim = this._inicio;
+                this._inicio = null;
+                return elim;
+                }
+            }else{
+                let aux = this._inicio;
+                while (aux != null) {
+                    if (aux.getCode() == code){
+                        elim = aux;
+                        aux.getPrevious().setNext(aux.getNext())
+                        aux.getNext().setPrevious(aux.getPrevious());
+                        elim.setNext(null);
+                        elim.setPrevious(null);
+                        return elim;
+                    }else{
+                        aux = aux.getNext();
+                        }
+                }
+                return elim;
+            }
         }
     }
 }
