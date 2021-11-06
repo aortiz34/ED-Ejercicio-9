@@ -30,11 +30,21 @@ export default class Inventory {
         }
     }
 
+    _counter(){
+        let aux = this._inicio;
+        let cont = 0;
+        while (aux != null) {
+            cont++;
+            aux= aux.getNext();
+        }
+        return cont;
+    }
+
     addProduct(product){
         if (this._inicio == null){
             this._inicio = product;
             return `${this._inicio.getInfo()}`;
-        }else if(this.searchProduct(product.getCode()) == null){
+        }else if(this.searchProduct(product.getCode()) == null && this._counter() < 20){
             if (product.getCode() < this._inicio.getCode()){
                 product.setNext(this._inicio);
                 this._inicio.setPrevious(product);
